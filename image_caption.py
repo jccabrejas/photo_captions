@@ -1,6 +1,6 @@
 import flet as ft
 import os
-from time import sleep
+
 
 class ImageToBeCaptioned(ft.Row):
 
@@ -26,10 +26,14 @@ class ImageToBeCaptioned(ft.Row):
         self.save_caption_button = ft.Button(
             "Save", on_click=lambda _: self.save_caption()
         )
-        self.controls = [self.image, self.image_caption, self.save_caption_button, self.caption_length,]
+        self.controls = [
+            self.image,
+            self.image_caption,
+            self.save_caption_button,
+            self.caption_length,
+        ]
 
     def update_caption(self):
-        #self.caption_text = self.image_caption.value
         setattr(self, "caption_text", self.image_caption.value)
         self.caption_length.value = f"{len(self.caption_text)}  characters"
         self.update()
@@ -58,7 +62,6 @@ def main(page: ft.Page):
                     image_list.controls.append(
                         ImageToBeCaptioned(image_path=image_path)
                     )
-                # sleep(0.05)
             page.update()
 
     file_picker = ft.FilePicker(on_result=pick_files)
@@ -70,7 +73,6 @@ def main(page: ft.Page):
         ),
         selected_folder,
         image_list,
-        ft.SnackBar(ft.Text("Hello")),  # Add snackbar to the page
     )
 
 
