@@ -42,7 +42,7 @@ class ImageToBeCaptioned(ft.Row):
         self.update()
         if self.image_path:
             caption_file_path = self.image_path + ".txt"
-            with open(caption_file_path, "w") as f:
+            with open(caption_file_path, "w", encoding="utf-8") as f:
                 f.write(self.caption_text)
 
 
@@ -64,6 +64,11 @@ def main(page: ft.Page):
                     )
             page.update()
 
+
+    def save_all_captions():
+        for control in image_list.controls: # type: ImageToBeCaptioned
+            control.save_caption()
+
     file_picker = ft.FilePicker(on_result=pick_files)
     page.overlay.append(file_picker)
 
@@ -72,6 +77,10 @@ def main(page: ft.Page):
             "Select Folder", on_click=lambda _: file_picker.get_directory_path()
         ),
         selected_folder,
+        ft.ElevatedButton(
+            "Save all", on_click=lambda _: save_all_captions()
+        ),
+
         image_list,
     )
 
